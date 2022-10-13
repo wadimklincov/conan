@@ -3,6 +3,7 @@ import platform
 import shutil
 from collections import OrderedDict
 
+import distro
 from jinja2 import Environment, select_autoescape, FileSystemLoader, ChoiceLoader, Template
 
 from conans.assets.templates import dict_loader
@@ -170,7 +171,7 @@ class ClientCache(object):
             self._new_config = ConfDefinition()
             if os.path.exists(self.new_config_path):
                 text = load(self.new_config_path)
-                content = Template(text).render({"platform": platform, "os": os})
+                content = Template(text).render({"platform": platform, "os": os, "distro": distro})
                 self._new_config.loads(content)
         return self._new_config
 
